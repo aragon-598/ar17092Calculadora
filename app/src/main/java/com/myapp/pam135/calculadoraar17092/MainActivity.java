@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
         //reemplazo los simbolos de division y multiplicacion
         expresionUser = expresionUser.replaceAll("÷", "/");
         expresionUser = expresionUser.replaceAll("x", "*");
+        expresionUser = expresionUser.replaceAll("√", "sqrt");
 
         //Calcular operación
         Expression expresion = new Expression(expresionUser);
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
         if (posCursor != 0 && tamañoTexto !=0){
             //Permite reemplazar diferentes caracteres del texto
             SpannableStringBuilder seleccion = (SpannableStringBuilder) pantalla.getText();
-            // Tomaría el caracter a de |a|rbol para reemplazarlo por ""
+            // Tomaría el caracter a de |a|rbol para reemplazarlo por "", para este caso sería numeros xd
             seleccion.replace(posCursor-1, posCursor, "");
 
             //Actualizamos nuesta pantalla
@@ -198,5 +199,11 @@ public class MainActivity extends AppCompatActivity {
             //Y actualizo la posición del cursor también
             pantalla.setSelection(posCursor-1);
         }
+    }
+
+    public void btnRaiz(View view){
+
+        updateTxt("√(");
+        pantalla.setSelection(pantalla.getText().toString().length());
     }
 }

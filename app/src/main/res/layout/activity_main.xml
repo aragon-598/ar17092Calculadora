@@ -274,6 +274,19 @@
                 android:onClick="btnMasMenos"
                 android:text="@string/masmenos"
                 android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                app:backgroundTint="#292525" />
+
+            <Button
+                android:id="@+id/btnRaiz"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/circulo"
+                android:onClick="btnRaiz"
+                android:text="@string/raiz"
                 android:textSize="30sp"
                 app:backgroundTint="#292525" />
 
@@ -319,6 +332,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 app:backgroundTint="#43a047" />
+
         </TableRow>
     </TableLayout>
 
