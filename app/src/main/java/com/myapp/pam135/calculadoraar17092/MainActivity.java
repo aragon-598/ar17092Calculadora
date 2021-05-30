@@ -2,7 +2,7 @@ package com.myapp.pam135.calculadoraar17092;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
+import org.mariuszgromada.math.mxparser.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
@@ -51,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
         //Nos va a permitir agregar más numeros
         if (getString(R.string.txtvista).equals(pantalla.getText().toString())){
             pantalla.setText(aggDato);
-            //para mantener el cursor al lado derecho
+            //para mantener el cursor al lado derecho y que no se vaya al final del texto
             pantalla.setSelection(posCursor+1);
         }else {
             pantalla.setText(String.format("%s%s%s",izquierda,aggDato,derecha ));
 
-            //para mantener el cursor al lado derecho
+            //para mantener el cursor al lado derecho y que no se vaya al final del texto
             pantalla.setSelection(posCursor+1);
         }
         ;
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnMasMenos(View view){
-
+        updateTxt("-");
     }
 
     public void btnPunto(View view){
@@ -164,6 +164,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnIgual(View view){
+
+        String expresionUser = pantalla.getText().toString();
+
+        //reemplazo los simbolos de division y multiplicacion
+        expresionUser = expresionUser.replaceAll("÷", "/");
+        expresionUser = expresionUser.replaceAll("x", "*");
+
+        //Calcular operación
+        Expression expresion = new Expression(expresionUser);
+        String resultado = String.valueOf(expresion.calculate());
+
+        //Agregando resultado a la pantalla
+        pantalla.setText(resultado);
+        //Actualizando cursor
+        pantalla.setSelection(resultado.length());
+
     }
 
     public void btnBorrar(View view){
