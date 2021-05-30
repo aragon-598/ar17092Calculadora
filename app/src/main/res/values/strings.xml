@@ -24,6 +24,6 @@
 
     <string name="borrar"> </string>
 
-    <string name="txtvista">Ingresa un valor</string>
+    <string name="txtvista">0</string>
 
 </resources>
