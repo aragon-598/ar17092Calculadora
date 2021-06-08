@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnExp(View view){
         updateTxt("^");
+        punto=true;
     }
 
     public void btnParentisis(View view){
@@ -165,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnMasMenos(View view){
         updateTxt("-");
+        punto=true;
     }
 
     public void btnPunto(View view){
@@ -221,12 +223,14 @@ public class MainActivity extends AppCompatActivity {
             pantalla.setText(seleccion);
             //Y actualizo la posición del cursor también
             pantalla.setSelection(posCursor-1);
+
         }
     }
 
     public void btnRaiz(View view){
 
         updateTxt("√(");
+        punto=true;
         pantalla.setSelection(pantalla.getText().toString().length());
     }
 
