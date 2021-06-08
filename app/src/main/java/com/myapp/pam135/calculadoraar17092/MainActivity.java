@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     //Para el editText
     EditText pantalla;
+    boolean punto=true;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -49,17 +51,16 @@ public class MainActivity extends AppCompatActivity {
         String derecha = vieja.substring(posCursor);
 
         //Nos va a permitir agregar más numeros
-        if (getString(R.string.txtvista).equals(pantalla.getText().toString())){
+         if(getString(R.string.txtvista).equals(pantalla.getText().toString())){
             pantalla.setText(aggDato);
             //para mantener el cursor al lado derecho y que no se vaya al final del texto
-            pantalla.setSelection(posCursor+1);
-        }else {
+            pantalla.setSelection(aggDato.length());
+        }else{
             pantalla.setText(String.format("%s%s%s",izquierda,aggDato,derecha ));
 
             //para mantener el cursor al lado derecho y que no se vaya al final del texto
             pantalla.setSelection(posCursor+1);
         }
-        ;
     }
 
     public void btnCero(View view){
@@ -105,22 +106,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnClear(View view){
         pantalla.setText("");
+        punto=true;
     }
 
     public void btnMultiplicacion(View view){
         updateTxt("x");
+        punto=true;
     }
 
     public void btnDivision(View view){
         updateTxt("÷");
+        punto=true;
     }
 
     public void btnsuma(View view){
         updateTxt("+");
+        punto=true;
     }
 
     public void btnResta(View view){
         updateTxt("-");
+        punto=true;
     }
 
     public void btnExp(View view){
@@ -139,9 +145,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i =0; i<posCursor; i++){
             if (pantalla.getText().toString().substring(i,i+1).equals("(")){
                 abrirPar++;
+                punto=true;
             }
             if (pantalla.getText().toString().substring(i,i+1).equals(")")){
                 cerrarPar++;
+                punto=true;
             }
         }
 
@@ -160,27 +168,42 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnPunto(View view){
-        updateTxt(".");
+        if (punto){
+            updateTxt(".");
+            punto=false;
+        }else {
+            Toast.makeText(this,"No se permiten más de un punto en un número",Toast.LENGTH_LONG).show();
+        }
+
     }
 
     public void btnIgual(View view){
 
         String expresionUser = pantalla.getText().toString();
+        String resultado = "";
 
         //reemplazo los simbolos de division y multiplicacion
         expresionUser = expresionUser.replaceAll("÷", "/");
         expresionUser = expresionUser.replaceAll("x", "*");
         expresionUser = expresionUser.replaceAll("√", "sqrt");
 
-        //Calcular operación
-        Expression expresion = new Expression(expresionUser);
-        String resultado = String.valueOf(expresion.calculate());
+        if (pantalla.getText().toString().contains("√(-")){
+            resultado = "Error";
+            pantalla.setText(resultado);
+            pantalla.setSelection(resultado.length());
+            punto=true;
+            Toast.makeText(this,"No se permiten raíces de números negativos",Toast.LENGTH_LONG).show();
+        }else {
 
-        //Agregando resultado a la pantalla
-        pantalla.setText(resultado);
-        //Actualizando cursor
-        pantalla.setSelection(resultado.length());
+            //Calcular operación
+            Expression expresion = new Expression(expresionUser);
+            resultado = String.valueOf(expresion.calculate());
 
+            //Agregando resultado a la pantalla
+            pantalla.setText(resultado);
+            //Actualizando cursor
+            pantalla.setSelection(resultado.length());
+        }
     }
 
     public void btnBorrar(View view){
@@ -206,4 +229,5 @@ public class MainActivity extends AppCompatActivity {
         updateTxt("√(");
         pantalla.setSelection(pantalla.getText().toString().length());
     }
+
 }
