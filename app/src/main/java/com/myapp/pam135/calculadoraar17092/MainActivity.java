@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnMultiplicacion(View view){
-        updateTxt("x");
+        updateTxt("×");
         punto=true;
     }
 
@@ -186,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
         //reemplazo los simbolos de division y multiplicacion
         expresionUser = expresionUser.replaceAll("÷", "/");
-        expresionUser = expresionUser.replaceAll("x", "*");
+        expresionUser = expresionUser.replaceAll("×", "*");
         expresionUser = expresionUser.replaceAll("√", "sqrt");
 
         if (pantalla.getText().toString().contains("√(-")){
